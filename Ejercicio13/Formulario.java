@@ -79,7 +79,7 @@ public class Formulario extends JFrame implements ActionListener {
     private class CerrarVentana extends WindowAdapter{
         @Override
         public void windowClosing(WindowEvent e) {//JOptionPane.showConfirmDialog --> es la VENTANA, contiene Titulo, Pregunta y Botones SI y NO.
-            int respuestaUser = JOptionPane.showConfirmDialog(rootPane, "Deseas salir?", "Cierre de la ventana" , JOptionPane.YES_NO_OPTION);
+            int respuestaUser = JOptionPane.showConfirmDialog(rootPane, "Quieres salir del Programa?", "Ventana de cierre" , JOptionPane.YES_NO_OPTION);
             if (respuestaUser == JOptionPane.YES_OPTION) {
                 System.exit(respuestaUser);
             }

@@ -11,23 +11,23 @@ public class Matriz {
 
     public Matriz(int n) {
         this.matriz = new int[n][n];// usar la propiedad de la matriz
-        
+
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[i].length; j++) {
                 matriz[i][j] = (int) (Math.random() * 11);// desde 0 a 10
             }
         }
-    }   
+    }
 
     public void tabla() {
         System.out.printf("%4s", "");
 
-        for (int i = 0; i < matriz[0].length; i++) {//cabe columnas
+        for (int i = 0; i < matriz[0].length; i++) {// cabece columnas
             System.out.printf("%4d", i);
         }
         System.out.println();// importante
 
-        for (int i = 0; i < matriz.length; i++) {//filas con letras
+        for (int i = 0; i < matriz.length; i++) {// filas con letras
             System.out.printf("%4c", (char) ('A' + i));// 1ro sumo y luego convierto
             for (int j = 0; j < matriz[i].length; j++) {
                 System.out.printf("%4d", matriz[i][j]);
@@ -54,22 +54,26 @@ public class Matriz {
                 // i = misma fila = i y misma columna = i -> matriz[i][i]
             }
         } else {
-            for (int i = 0; i < matriz.length; i++) {
-                for (int j = 0; j < matriz[i].length; j++) {
-                    if (i != j) {// sino no esto en la diagonal
-                        acu += matriz[i][j];
-                    }
-                }
-            }
+            acu = suma() - suma(true);
+            // for (int i = 0; i < matriz.length; i++) {
+            // for (int j = 0; j < matriz[i].length; j++) {
+            // if (i != j) {// sino no esto en la diagonal
+            // acu += matriz[i][j];
+            // suma total de la matriz, suma total diagonal,
+            // se resta = suma de todos que no estan en la diagonal.
+            // }
+            // }
+            // }
         }
         return acu;
+
     }
 
     // de fila 0 tengo que sumar todos los valores.
     public int suma(int numero) {
         int acu = 0;
         if (numero >= 0 && numero < matriz.length) {
-            for (int j = 0; j < matriz.length; j++) {
+            for (int j = 0; j < matriz.length; j++) {// Ojo, recorres numero de filas
                 acu += matriz[numero][j];
                 // recuerda el return te sale del bucle
             }

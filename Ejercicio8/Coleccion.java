@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Coleccion {
@@ -63,7 +64,7 @@ public class Coleccion {
     }
 
     public void eliminar() {
-        System.out.println("dime que elemento(indice) deseas borrar:");
+        System.out.println("Dime que juego quieres borrar: 'ID'");
         int posi = sc.nextInt();
         sc.nextLine();
 
@@ -88,35 +89,50 @@ public class Coleccion {
 
     public void menu() {
         int opcion = 0;
+        boolean flag;
         do {
-            System.out.println("***Bienvenido***");
-            System.out.println(
-                    "Elige una opcion:\n1.Insertar nuevo juego.\n2.Visualizar las listas de videojuegos.\n3.Buscar videojuego.\n4.Eliminar videojuego.\n5.Borrar videojuegos de un año determinado.\n6.Salir del programa");
-            opcion = sc.nextInt();
-            switch (opcion) {
-                case 1:
-                    anhadir();
-                    break;
-                case 2:
-                    mostrar();
-                    break;
-                case 3:
-                    buscar();
-                    break;
-                case 4:
-                    eliminar();
-                    break;
-                case 5:
-                    borrarAnho();
-                    break;
-                case 6:
-                    System.out.println("Saliendo del programa...");
-                    break;
-                default:
-                    System.out.println("Opcion no valida!");
-                    break;
+            try {
+                flag = false;
+                System.out.println();
+                System.out.println("***Bienvenido***");
+                System.out.println(
+                        "Elige una opcion:\n1.Insertar nuevo juego.\n2.Visualizar las listas de videojuegos.\n3.Buscar videojuego.\n4.Eliminar videojuego.\n5.Borrar videojuegos de un año determinado.\n6.Salir del programa");
+                opcion = sc.nextInt();
+                switch (opcion) {
+                    case 1:
+                        anhadir();
+                        flag = true;
+                        break;
+                    case 2:
+                        mostrar();
+                        flag = true;
+                        break;
+                    case 3:
+                        buscar();
+                        flag = true;
+                        break;
+                    case 4:
+                        eliminar();
+                        flag = true;
+                        break;
+                    case 5:
+                        borrarAnho();
+                        flag = true;
+                        break;
+                    case 6:
+                        System.out.println("Saliendo del programa...");
+                        break;
+                    default:
+                        System.out.println("Opcion no valida!");
+                        flag = true;
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                flag = true;
+                System.out.println("Error, dato no valido!");
+                sc.nextLine();
             }
-        } while (opcion != 6);
+        } while (flag);
     }
 }
 

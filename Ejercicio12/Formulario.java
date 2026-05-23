@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Formulario extends JFrame implements ActionListener, MouseMotionListener, MouseListener, KeyListener {
+public class Formulario extends JFrame implements ActionListener, MouseMotionListener, KeyListener {
+    // TODO Coor en botones.
 
+    // TODO eliminar listeenr innecesarios
+    // llamar a todos los componentes con un bucle
     JButton amarillo;
     JButton azul;
     JButton aleatorio;
@@ -15,36 +18,46 @@ public class Formulario extends JFrame implements ActionListener, MouseMotionLis
         super("Colores");
 
         amarillo = new JButton("Amarillo");
-        amarillo.setBounds(50, 50, 50, 100);
+        amarillo.setBounds(50, 50, 100, 50);
         amarillo.addActionListener(this);
+        amarillo.addKeyListener(this);
         amarillo.addMouseMotionListener(this);
-        amarillo.addMouseListener(this);
         this.add(amarillo);
-        
+
         azul = new JButton("Azul");
-        azul.setBounds(150, 50, 50, 100);
+        azul.setBounds(150, 50, 100, 50);
         azul.addActionListener(this);
+        azul.addKeyListener(this);
         azul.addMouseMotionListener(this);
-        azul.addMouseListener(this);
         this.add(azul);
-        
+
         aleatorio = new JButton("Aleatorio");
-        aleatorio.setBounds(250, 50, 120, 120);
+        aleatorio.setBounds(250, 50, 100, 50);
         aleatorio.addActionListener(this);
+        aleatorio.addKeyListener(this);
         aleatorio.addMouseMotionListener(this);
-        aleatorio.addMouseListener(this);
         this.add(aleatorio);
-        
+
         lbl = new JLabel("Pulsa una tecla.");
-        lbl.setBounds(50, 150, 300, 30);
+        lbl.setBounds(155, 15, 350, 30);
+        lbl.addKeyListener(this);
         this.add(lbl);
-        
-        this.addMouseMotionListener(this);
-        this.addMouseListener(this);
+
+        this.getContentPane().addMouseMotionListener(this);//añadirlo al panel para que no pille los bordes 
         this.addKeyListener(this);
         this.setFocusable(true);
+
+        this.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+                setTitle("Colores");
+            }
+        });
+
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -59,11 +72,10 @@ public class Formulario extends JFrame implements ActionListener, MouseMotionLis
                     (this.getContentPane().getWidth() - aleatorio.getWidth()));
             int y = (int) (Math.random() *
                     (this.getContentPane().getHeight() - aleatorio.getHeight()));
-            this.setLocation(x, y);
             if ((e.getModifiers() & ActionEvent.SHIFT_MASK) != 0) {
                 aleatorio.setLocation(x, y);// muevo el boton aleatorio
-            }else{
-                this.setLocation(x, y);//muevo ventana
+            } else {
+                this.setLocation(x, y);// muevo ventana
             }
         }
     }
@@ -74,29 +86,25 @@ public class Formulario extends JFrame implements ActionListener, MouseMotionLis
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        this.setTitle("Control del ratón - (X:" + e.getX() + ", Y:" + e.getY() + ")");
-    }
+        int x = e.getX();
+        int y = e.getY();
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
+        if (e.getSource() == amarillo) {
+            x += amarillo.getX();
+            y += amarillo.getY();
+        }
+        if (e.getSource() == azul) {
+            x += azul.getX();
+            y += azul.getY();
+        }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
+        if (e.getSource() == aleatorio) {
+            x += aleatorio.getX();
+            y += aleatorio.getY();
+        }
+        this.setTitle("Control raton, X: " + x + " Y: " + y);
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        this.setTitle("Colores");
-
+        lbl.setText("Raton Coorde, X:" + x + " Y:" + y);
     }
 
     @Override
@@ -108,10 +116,11 @@ public class Formulario extends JFrame implements ActionListener, MouseMotionLis
         char letra = e.getKeyChar();
         int codiTecla = e.getKeyCode();
 
-        lbl.setText("La tecla:" + letra + " y el Codigo:" + codiTecla);
+        lbl.setText("Caracter:" + letra + " / Codigo del caracter:" + codiTecla);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
     }
+
 }
